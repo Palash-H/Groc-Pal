@@ -1,11 +1,11 @@
-name: Grocery App CI Pipeline
+name: Grocery App CI-CD Pipeline
 
 on:
   push:
     branches: [ main ]
 
 jobs:
-  build-and-push:
+  build-push-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,3 +20,15 @@ jobs:
 
     - name: Push Docker Image
       run: docker push ${{ secrets.DOCKER_USERNAME }}/palgroapptill:v3
+
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Update Azure Container App
+      run: |
+        az containerapp update \
+        --name grocery-app \
+        --resource-group grocery-rg \
+        --image palashh/palgroapptill:v3
