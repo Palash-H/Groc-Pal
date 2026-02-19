@@ -1,0 +1,50 @@
+{% extends 'layout.html' %}
+{% block title %}
+Edit Product - Groceri
+{% endblock %}
+{% block content %}
+<h1>Edit Product</h1>
+<form method="post" class = "form">
+    <label for="name" class="form-label">Name
+        <input type="text" name="name" id="name" class="form-control"  value = {{product.name}} required/>
+    </label>
+    <label for="price", class="form-label">Price
+        <input type="number" name="price" id="price" class="form-control" value = {{product.price}} required />
+    </label>
+    <label for="category" class="form-label">Category
+        <select name="category" id="category" class="form-select" value= {{product.category_id}} required>
+            {% for category in categories %}
+                {% if category.id == product.category_id %}
+                    <option value = "{{category.id}}" selected>{{category.name}}</option>
+                {% else %}
+                <option value="{{category.id}}">{{category.name}}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+    </label>
+    <label for="quantity" class="form-label">Quantity
+        <input type="number" name="quantity" id="quantity" class="form-control" value = {{product.quantity}} required/>
+    </label>
+    <label for="manufacture_date" class="form-label">Manufacture Date
+        <input type="date"  name="manufacture_date" id="manufacture_date" max = "{{now}}" class="form-control" value = {{manufacture_date}} required />
+    </label>
+    <input type="submit" value = "Update" class="btn btn-outline-success mt-3"/>
+</form>
+
+{% endblock %}
+{% block style %}
+<style>
+    h1 {
+        text-align:center;
+    }
+    .form {
+        margin-top: 32px;
+        display: flex;
+        flex-direction: column;
+        /* align-items: center; */
+        margin-left:auto;
+        margin-right: auto;
+        width: 50%;
+    }
+</style>
+{% endblock %}

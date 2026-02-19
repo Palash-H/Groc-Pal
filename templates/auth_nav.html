@@ -1,0 +1,52 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">GroceriApp</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <!-- render auth links if not logged in else normal links -->
+        {% if user %}
+
+            <li class = "nav-item">
+                <a class = "nav-link" href = "{{url_for('main.profile')}}">{{user.name}}'s Profile</a>
+            </li>
+            <li class = "nav-item">
+                <a class = "nav-link text-danger" href = "{{url_for('main.logout')}}">Logout</a>
+            </li>
+                {% if not user.is_admin %}
+                <li class = "nav-item">
+                    <a class = "nav-link" href = "{{url_for('main.cart')}}">Cart</a>
+                </li>
+                <li class = "nav-item">
+                    <a class = "nav-link" href = "{{url_for('main.orders')}}">Orders</a>
+                </li>
+                {% else %}
+                <li class = "nav-item">
+                    <a class = "nav-link" href = "{{url_for('main.admindash')}}">Dashboard</a>
+                </li>
+                
+                {% endif %}
+
+            {% else %}
+            <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{url_for('main.register')}}">Register</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="{{url_for('main.login')}}">Login</a>
+            </li>
+        
+        {% endif %}
+        
+      </ul>
+
+    </div>
+  </div>
+</nav>
+<style>
+    .navbar{
+        width: 100%;
+        padding: 0;
+    }
+</style>

@@ -1,0 +1,7 @@
+flask
+Jinja2
+flask-sqlalchemy
+python-dotenv
+werkzeug
+flask-restful
+flask-migrate

@@ -1,0 +1,170 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+
+HomePage - Groceri App 
+
+{% endblock %}
+
+{% block content %}
+{% include 'searchbar.html' with context %}
+<h1> Welcome to Groceri. One stop destination for all your needs. </h1>
+<h2 class="text-muted">Browse across categories.</h2>
+<div class="categories-list">
+    {% for category in categories %}
+        <div class="category">
+                <!-- <img src = "{{category.image}}" alt = "{{category.name}}"/> -->
+                <h3>{{category.name}}</h3>
+                <div class="product-list">
+                    {% for product in category.products %}
+                        {% if (price and product.price <= price ) or (name and name.lower() in product.name.lower()) or (not price and not name) %}
+                            <div class="product">
+                                <div class="product-info">
+                                    <h4>{{product.name}}</h4>
+                                    <p>&#8377;{{product.price}}</p>
+                                    <p>Available Units: {{product.quantity}}</p>
+                                </div>
+                                {% if product.quantity>0 %}
+                                    <div class="add-to-cart">
+                                        <form action="{{url_for('main.add_to_cart', product_id = product.id)}}" method = "POST" class="product-quantity">
+                                            <div class="quantity-buttons">
+                                                <button onclick="decreaseqty({{product.id}})" type="button" class="btn btn-outline-danger">-</button>
+                                                <input type="number" name="quantity" id="quantity" value="1" min="1" max="{{product.quantity}}" required class="quantity-input-{{product.id}} form-control">
+                                                <button onclick="increaseqty({{product.id}}, {{product.quantity}})" type="button" class="btn btn-outline-success">
+                                                    +
+                                                </button>
+                                            </div>
+                                            <!-- <br> -->
+                                            <button class="submit-button" type="submit">
+                                                🛒 Add to Cart
+                                            </button>
+                                        </form>
+
+                                    </div>
+                                {% else %}
+                                    <button type="button" class="btn btn-outline-danger" disabled>❌ Out of Stock</button>
+                                
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </a>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
+
+{% block style %}
+<style>
+
+    .categories-list{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .category{
+        width: 100%;
+        margin: 32px auto;
+    }
+    .product-list{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .product{
+        width: 300px;
+        margin: 16px;
+        padding: 16px;
+        border: 1px solid snow;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .product-info{
+        display:flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .product-info h4{
+        margin:0;
+    }
+    .product-info p{
+        margin:0;
+    }
+    .add-to-cart{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .add-to-cart .submit-button{
+        padding: 8px 16px;
+        border: none;
+        border-radius: 8px;
+        background-color: blue;
+        color: whitesmoke;
+        cursor: pointer;
+    }
+    .add-to-cart .submit-button:hover{
+        background-color: teal;
+    }
+    .add-to-cart .submit-button:active{
+        background-color: aqua;
+    }
+    .add-to-cart .submit-button:focus{
+        outline: snow;
+    }
+    .product-quantity{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap:1rem
+    }
+    .quantity-buttons{
+        margin-top: 10px;
+        /* margin-right: 5px; */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .product-quantity label{
+        margin-right: 8px;
+    }
+    .product-quantity input{
+        margin: 0 8px;
+        width: 3rem;
+        text-align: center;
+        -moz-appearance: textfield;
+    }
+    .product-quantity input::-webkit-inner-spin-button, .product-quantity input::-webkit-outer-spin-button{
+        -webkit-appearance: none;
+        margin:0;
+    }
+    /* body{
+        background-color: snow;
+    } */
+
+
+</style>
+{% endblock %}
+
+{% block script %}
+    <script>
+        function increaseqty(id, maxquantity){
+            var quantity= document.querySelector(".quantity-input-"+id);
+            if(quantity.value<maxquantity){
+                quantity.value = parseInt(quantity.value)+1;
+            }
+        }
+        function decreaseqty(id){
+            var quantity= document.querySelector(".quantity-input-"+id);
+            if(quantity.value>1){
+                quantity.value = parseInt(quantity.value)-1;
+            }
+        }
+    </script>
+{% endblock %}
