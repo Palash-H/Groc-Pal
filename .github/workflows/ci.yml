@@ -29,6 +29,6 @@ jobs:
     - name: Update Azure Container App
       run: |
         az containerapp update \
-        --name grocery-app \
-        --resource-group grocery-rg \
+        --name grocerpal \
+        --resource-group Sai-Groc \
         --image palashh/palgroapptill:v3
