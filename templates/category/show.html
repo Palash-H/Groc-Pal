@@ -1,0 +1,56 @@
+{% extends 'layout.html' %}
+{% block title %}
+    Products of {{category.name}} - Groceri
+{% endblock %}
+{% block content %}
+
+    <h1>Products - {{category.name}}</h1>
+    <div class = "heading">
+        <!-- <h2 class = "text-muted">Products</h2> -->
+        <h3 class = "text-muted mt-4"><em>Showing Products of Category {{category.name}} only.</em></h3>
+        <a class = "btn btn-outline-success" href="{{url_for('main.add_product', catid = category.id)}}"><strong>+</strong> Add</a>
+    </div>
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>MFD (Y-M-D)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for products in category.products %}
+            <tr>
+                <td>{{products.id}}</td>
+                <td>{{products.name}}</td>
+                <td>{{products.quantity}}</td>
+                <td>{{products.price}}</td>
+                <td>{{products.man_date}}</td>
+                
+                <td>
+                    <a href="{{url_for('main.edit_product', id = products.id)}}" class="btn btn-outline-primary">✏️Edit</a>
+                    <h7> </h7>
+
+                    <a href="{{url_for('main.delete_product', id = products.id)}}" class = "btn btn-danger">&#x1F5D1;Delete</a>
+
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+{% block style%}
+<style>
+    .heading{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    h1, h2{
+        text-align: center;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'layout.html' %}
+{% block title %}
+    Admin Dashboard - Groceri
+{% endblock %}
+{% block content %}
+
+    <h1>Admin Dashboard</h1>
+    <div class = "heading">
+        <h2 class = "text-muted">Categories</h2>
+        <a class = "btn btn-outline-success" href="{{url_for('main.add_categories')}}"><strong>+</strong> Add</a>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Category ID</th>
+                <th>Category Name</th>
+                <th>No. of Products</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for categories in categories %}
+            <tr>
+                <td>{{categories.id}}</td>
+                <td>{{categories.name}}</td>
+                <td>{{categories.products|length}}</td>
+                <td>
+                    <a href="{{url_for('main.show_category', id = categories.id)}}" class="btn btn-outline-success">🔍Explore</a>
+                    <h7> </h7>
+                    <a href="{{url_for('main.edit_category', id = categories.id)}}" class="btn btn-outline-primary">✏️Edit</a>
+                    <h7> </h7>
+
+                    <a href="{{url_for('main.delete_category', id = categories.id)}}" class = "btn btn-danger">&#x1F5D1;Delete</a>
+
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+{% block style%}
+<style>
+    .heading{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    h1, h2{
+        text-align: center;
+    }
+</style>
+{% endblock %}
