@@ -12,14 +12,17 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v3
 
+    - name: Set Image Tag
+      run: echo "IMAGE_TAG=${GITHUB_SHA}">> $GITHUB_ENV
+
     - name: Log in to Docker Hub
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
     - name: Build Docker Image
-      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/palgroapptill:v3 .
+      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/palgroapptill:${{ env.IMAGE_TAG }} .
 
     - name: Push Docker Image
-      run: docker push ${{ secrets.DOCKER_USERNAME }}/palgroapptill:v3
+      run: docker push ${{ secrets.DOCKER_USERNAME }}/palgroapptill:${{ env.IMAGE_TAG }}
 
     - name: Azure Login
       uses: azure/login@v1
@@ -31,4 +34,4 @@ jobs:
         az containerapp update \
         --name grocerpal \
         --resource-group Sai-Groc \
-        --image palashh/palgroapptill:v3
+        --image palashh/palgroapptill:${{ env.IMAGE_TAG }}
