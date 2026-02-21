@@ -22,6 +22,7 @@ load_dotenv()
 migrate = Migrate()
 def create_app():
     app = Flask(__name__)
+        
     CORS(
     app,
     resources={r"/api/*": {"origins": "*"}},
