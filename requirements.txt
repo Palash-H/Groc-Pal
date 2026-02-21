@@ -13,7 +13,7 @@ colorama==0.4.6
 cryptography==46.0.5
 decorator==5.2.1
 distro==1.9.0
-Django==6.0.2
+Django==5.2.10
 django-cors-headers==4.9.0
 django-filter==25.2
 djangorestframework==3.16.1

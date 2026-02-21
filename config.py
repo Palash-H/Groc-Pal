@@ -19,4 +19,5 @@ class Configuration:
     JWT_ENCODE_NBF=False
     JWT_ENCODE_ISSUER=None
     JWT_ENCODE_AUDIENCE=None
-    JWT_SECRET_KEY = os.getenv("JWT_KEY") # This is demo applicatoin, in production take this from .env file ...Pal
+    # JWT_SECRET_KEY = os.getenv("JWT_KEY") # This is demo applicatoin, in production take this from .env file ...Pal
+    JWT_SECRET_KEY= "super-secret-key-change-this"
